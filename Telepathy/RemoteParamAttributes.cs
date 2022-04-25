@@ -129,20 +129,20 @@ namespace Telepathy
                         this.m_stateTags.RenderStateTags(graphics);
                     }
 
+                    //figure out where to draw the arrow
+                    PointF arrowLocation = PointF.Empty;
+                    if (Owner is Param_RemoteReceiver)
+                    {
+                        arrowLocation = new PointF(bounds.Left + 10, this.OutputGrip.Y + 2);
+                    }
+                    if (Owner is Param_RemoteSender)
+                    {
+                        arrowLocation = new PointF(bounds.Right - 10, this.OutputGrip.Y + 2);
+                    }
+                    //draw the arrow
+                    if (arrowLocation != PointF.Empty) renderArrow(canvas, graphics, arrowLocation);
                 }
 
-                //figure out where to draw the arrow
-                PointF arrowLocation = PointF.Empty;
-                if (Owner is Param_RemoteReceiver)
-                {
-                    arrowLocation = new PointF(bounds.Left + 10, this.OutputGrip.Y + 2);
-                }
-                if (Owner is Param_RemoteSender)
-                {
-                    arrowLocation = new PointF(bounds.Right - 10, this.OutputGrip.Y + 2);
-                }
-                //draw the arrow
-                if (arrowLocation != PointF.Empty) renderArrow(canvas, graphics, arrowLocation);
             }
 
         }
