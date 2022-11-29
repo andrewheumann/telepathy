@@ -40,7 +40,8 @@ namespace Telepathy
         protected override void Layout()
         {
             //establish the size based on the text content
-            float textWidth = (float)System.Math.Max(GH_FontServer.MeasureString(this.Owner.NickName, GH_FontServer.StandardBold).Width + 10, 50);
+            float baseTextWidth = GH_FontServer.MeasureString(this.Owner.NickName, GH_FontServer.StandardBold).Width / TelepathyUtils.resolutionScale;
+            float textWidth = (float)System.Math.Max(baseTextWidth + 10, 50);
             System.Drawing.RectangleF bounds = new System.Drawing.RectangleF(this.Pivot.X - 0.5f * textWidth, this.Pivot.Y - 10f, textWidth, 20f);
             this.Bounds = bounds;
             this.Bounds = GH_Convert.ToRectangle(this.Bounds);
@@ -155,7 +156,7 @@ namespace Telepathy
             //  Font font = new Font("Wingdings 3", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             //render the text at specified location
             //Version for everyone:
-            GH_GraphicsUtil.RenderCenteredText(graphics, "\u2192", new Font("Arial", 10F), Color.Black, new PointF(loc.X, loc.Y - 1.5f));
+            GH_GraphicsUtil.RenderCenteredText(graphics, "\u2192", new Font("Arial", 10f/TelepathyUtils.resolutionScale), Color.Black, new PointF(loc.X, loc.Y - 1.5f));
             //Version for Marc:
            // GH_GraphicsUtil.RenderCenteredText(graphics, "*", new Font("Arial", 10F), Color.Black, loc);
         }

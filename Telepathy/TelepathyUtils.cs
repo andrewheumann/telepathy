@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.CompilerServices;
-
+using Microsoft.Win32;
 namespace Telepathy
 {
     public static class TelepathyUtils
@@ -17,6 +17,29 @@ namespace Telepathy
             connectMatchingParams(doc);
            if(scheduleNew) Grasshopper.Instances.ActiveCanvas.Document.ScheduleSolution(10);
         }
+
+
+        //Method for establishing windows resolution scaling. From debugging this is called when the 
+        //property is first required, e.g. when telepathy object is dropped onto canvas after GH is 
+        //first opended
+        private static float getResolutionScale()
+        {
+            try
+            {
+                var canvasDPI = Grasshopper.Instances.ActiveCanvas.DeviceDpi;
+                return canvasDPI / 96.0f;
+            }
+            catch 
+            {
+                return 1.0f;
+            }
+        }
+
+        //Field for storing the scale, at the moment this is fixed for the lifetime of the GH
+        //Weirdly it still seems to work if you change the scale mid Rhino session, it looks like
+        //windows just applies a scale on all the pixels in Rhino if you do this - the UI looks 
+        //scaled to me.
+        public static readonly float resolutionScale = getResolutionScale();
 
         //the main method that does the work - checks all receivers and senders for matches,
         //and rewires accordingly.
